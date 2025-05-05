@@ -39,7 +39,7 @@ fig.update_geos(
 fig.show()
 
 # Saves the map as a static image (PNG)
-fig.write_image("FASDH25-portfolio2/Scripts/regex_map.png", scale=2)
+fig.write_image("regex_map.png", scale=2)
 
 # Display the frequencies on a frame map per month:
 fig = px.scatter_geo(merged_df, lat="latitude", lon="longitude", size="count", hover_name="asciiname", animation_frame="month", color="count", color_continuous_scale=px.colors.sequential.YlOrRd,  projection="natural earth")

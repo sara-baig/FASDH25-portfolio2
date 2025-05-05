@@ -36,7 +36,8 @@ for row in rows[1:]:          #skipping the header
     detailed_list=[asciiname]  #starting to add the first column to the larger list
     #split column[5] by comma and add various spellings from col[5] to larger list
     if alternatenames:
-        detailed_list.extend ([alternate.strip() for alternate in alternatenames.split(",")])
+        ## split the alternate names by comma, remove any surrounding whitespace, and add them to the list of possible spellings
+        detailed_list.extend ([alternate.strip() for alternate in alternatenames.split(",")])#help from ChatGPT(Script 1)
             
     
     #build a single regex pattern that matches any alternate using '|' for alterations
@@ -73,7 +74,7 @@ for filename in os.listdir(folder):
         matches = re.findall(pattern, text, re.IGNORECASE)
         count = len(matches)                              #number of times the place is occured
 
-        if count==0:
+        if count==0: #took help from ChatGPT(script 1)
             continue
 
         #adding the number of times places found to the total frequency
