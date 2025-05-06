@@ -5,10 +5,10 @@ import pandas as pd # library for tabular data and exporting tsv
 #write list of rows in tsv
 def write_tsv(rows, column_list, path):
 
-#convert list of rows into dataframe
+    #convert list of rows into dataframe
     df= pd.DataFrame(rows, columns=column_list)
 
-#exporting the dataframe to tsv without including the index colunm
+    #exporting the dataframe to tsv without including the index colunm
     df.to_csv(path, sep="\t", index=False)
 
 #define folder
@@ -16,6 +16,7 @@ folder= "../articles"
 
 #setting path for loading gazatteer tsv file
 path = "../gazetteers/geonames_gaza_selection.tsv"
+
 #reading the file
 with open(path, encoding="utf-8") as file:
     data = file.read()
