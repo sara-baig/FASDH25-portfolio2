@@ -4,11 +4,11 @@ A repository for students' portfolios for mini-project 2
 This project withdraws and envisions geographic references from January 2024 news articles about Gaza. We used two different techniques: regular expressions with a gazetteer and Named Entity Recognition (NER) to compare place recognition.
 
 ## Folder Structure
-- 'articles': Raw news articles from January 2024 in text format
-- 'gazetteers': Contains TSV files
-- 'Scripts': Scripts for regex+gazetteer extraction, and for NER using Stanza
-- '2README.md': Project documentation
-- 'ChatGPT Convos': Documentation of ChatGPT conversations
+'Outputs': contains maps and counts
+'gazetteers': Contains TSV (countries.tsv, geonames_gaza_selection.tsv, README)
+'Scripts': Scripts for regex+gazetteer extraction, and for NER using Stanza
+'README.md': Project documentation
+'AI_documentation': Documentation of ChatGPT conversations
 
 ## Project Overflow
 ### Forking and Cloning the portfolio folder(0)
@@ -75,13 +75,13 @@ To verify her output, Dilawaiz displayed the contents of ner_gazetteer.tsv direc
 Her work completed a crucial part of our data pipeline — converting place names into mappable geographic points — and prepared the dataset for the final visualization step of the project.
 This task done by Dilawaiz was reviewed by Sara.
 
-### Map the regex-extracted placenames(4a)
+### Map the regex-extracted placenames(4A)
 In this part of the project, mapping script was developed by Zehrish which visualized the frequency of regex-extracted place names using plotly.express. The key objective was to transform the raw count data from regex_counts.tsv into a dynamic, interpretable geographic map that reflected how often different places in Gaza were mentioned in the news corpus, month by month. To do this, the script first loaded and pre-processed two separate datasets: the gazetteer (containing geographical coordinates and place names) and the regex output (containing frequency data). A challenge emerged because the two datasets shared no exact common column. To resolve this, with guidance from ChatGPT, Zehrish learned how to merge dataframes based on comparable but differently named columns by normalizing the relevant fields, converting placename and asciiname to lowercase and stripping whitespace and then merging them using pd.merge() with the left_on and right_on arguments. This allowed the creation of a merged dataset that linked place frequencies with their geographical coordinates. Another issue eemerged while generating the maps. Though the map was correctly formed in PNG form but it was not showing up in the project portfolio. Additionally, it failed to generate map in HTML form. For this, the python suggested to intall Kaleido. Zehrish did this and everthing went well.
 Several visualization strategies were explored to represent this data meaningfully. Initially, she used a static scatter map with a color scale (YlOrRd) indicating the frequency of mentions. This choice offered clear visual contrast, helping highlight the most discussed locations. To further refine the visual aesthetics, she adjusted the background using the carto-darkmatter-nolabels map style and configured the geo-projection to ‘natural earth’, enabling a more readable global context. Colors for land, ocean, and rivers were customized to enhance clarity. However, a static map proved insufficient for capturing temporal dynamics. Therefore, Zehrish created an animated scatter map using the animation_frame parameter set to "month", allowing the viewer to observe changes in place name frequencies over time. The size of the points were scaled according to frequency, and the same color scale was retained for consistency.
 This dual-approach of combining static and animated mapping proved effective in conveying both spatial distribution and temporal trends. The interactive version was saved as regex_map.html for browser-based viewing, and a high-resolution static image was exported as regex_map.png. Overall, the assistance from ChatGPT was instrumental in resolving technical obstacles such as non-matching dataframe structures, and in refining regex preprocessing logic. The result was a compelling, interactive visualization that bridged geographic and temporal dimensions of place name mentions in Gaza.
 This task done by Zehrish was reviewed by both Sara and Dilawaiz.
 
-### Map the NER-extracted placenames(4b)
+### Map the NER-extracted placenames(4B)
 Both Dilawaiz and Sara worked together to visualize the frequency of NER-extracted place names from January 2024 on an interactive map. This task involved using the cleaned data files generated in earlier steps: ner_counts.tsv (which held the frequency of each location extracted from the corpus) and ner_gazetteer.tsv (which contained the geocoded coordinates for those places). Their objective was to plot each place on a map using Plotly Express and size the markers based on how frequently each place was mentioned.
 
 They began by importing the required libraries, primarily pandas for handling tabular data and plotly.express for creating geographic scatter plots. Both .tsv files were loaded into pandas dataframes, and the next step involved merging them on their respective place name columns — "Place" in the counts file and "Name" in the gazetteer. This merge operation was crucial, and during the process, the group consulted ChatGPT for help. When asked how to join the two .tsv files, ChatGPT suggested using pandas.merge() and explained how this function works similarly to a join operation in Excel.
@@ -109,10 +109,10 @@ A gazetteers/ folder to store the generated NER_gazetteer.tsv and any related fi
 An articles/ folder containing the full dataset of news articles.
 A scripts/ folder to store all Python files in one place for clarity.
 
-####Documentation and AI Reflections
+#### Documentation and AI Reflections
 Each group member created a personal AI document, e.g., AI_documentation_SaraBaig.docx file, reflecting on how ChatGPT was used during the project. Instead of relying on ChatGPT to generate answers, we used it as a learning companion by asking it to explain concepts, help debug code, and walk us through best practices.
 
-####Final Preparation and Uploading to Moodle
+#### Final Preparation and Uploading to Moodle
 Once our GitHub repository was complete and reviewed, we created a local copy of it on one team member’s computer. Following the submission guidelines, we deleted the articles/ folder (which contained a large volume of raw text data) and the hidden .git/ directory (to reduce file size and remove versioning metadata).
 We then zipped the entire folder using standard compression tools and uploaded it to Moodle. Alongside the zip file, we also submitted the link to our public GitHub fork, allowing instructors to access the full project history, including commit messages and notebook versions.
 This two-step submission—GitHub link for transparency and zipped folder for portability—ensured that our project could be reviewed both as a final product and as a documented process.
@@ -120,11 +120,11 @@ The finalization stage helped us synthesize our work and understand how small de
 
 
 ## Comparison: Regex + Gazetteer vs NER
-###Regex + Gazetteer:
+### Regex + Gazetteer:
 Pros: One of the primary advantages of using regex with a gazetteer is its high precision when dealing with known place names. By using a curated list of Gaza-related locations (the gazetteer), we could match exact terms in the text using regex patterns. This method is particularly effective for domains where terminology is consistent and relatively constrained. Moreover, regex is computationally efficient, easily implemented, and transparent, making the results interpretable and easy to debug. When we needed to filter out irrelevant data or match specific formats (e.g., words in uppercase or within particular sentence structures), regex allowed fine-grained control.
 Cons: This method has clear limitations. It is entirely rule-based and thus lacks flexibility. If a place name is spelled differently, abbreviated, or mentioned in a context not anticipated by the regex rules, it will be missed. Moreover, the gazetteer needs to be comprehensive and updated—any omissions directly lead to false negatives. It also lacks the ability to handle context; for example, a word like “Rafah” might be a person’s name in one context and a location in another, but regex has no way of distinguishing between the two. In our project, we noticed this rigidity when uncommon or misspelled place names were missed entirely.
 
-###NER (Stanza)
+### NER (Stanza):
 Pros: NER, particularly through the Stanza NLP library, offers a more context-aware and generalizable approach. It identifies place names based on linguistic features and learned patterns, rather than static lists. This meant that it could detect previously unseen place names or capture locations even if they were embedded in complex sentence structures. For example, Stanza could identify “the southern city of Khan Younis” as a location, even without a direct match in the gazetteer. This was particularly useful given the wide variety of reporting styles across the news articles.
 Cons: NER also has drawbacks. Its accuracy is dependent on the quality and domain-alignment of its training data. Stanza, although state-of-the-art, is trained on general corpora and may underperform on specialized or region-specific text. In our experience, this led to some false positives, where the model misidentified organizations or adjectives as place names. Additionally, NER models are computationally heavier than regex and less transparent; errors are harder to trace and correct since they stem from the model's learned weights rather than explicit rules.
 
@@ -135,7 +135,7 @@ Cons: NER also has drawbacks. Its accuracy is dependent on the quality and domai
 ### NER-based Map
 ![image]("FASDH25-portfolio2\Outputs\Maps\ner_map.png.png")]
 
-##Comparison of Maps
+## Comparison of Maps
 The comparison between the regex-based and NER-based maps for January 2024 reveals key differences in both extraction methodology and visualization outcomes. The regex-based approach relies on a predefined list of place names stored in a gazetteer. This list is then matched against the article texts using regular expressions, allowing for highly controlled and precise matching. However, this precision comes at the cost of flexibility. If a place is mentioned using a slightly different spelling, variation, or possessive form (e.g., “Gaza’s”), the regex might not detect it unless those variants were anticipated and explicitly listed in the gazetteer. As a result, the regex map tends to be more limited in its geographic coverage, with fewer data points plotted, especially if the gazetteer was not exhaustive or updated. This map gives a cleaner, more conservative representation of place mentions but may underrepresent the full range of locations discussed in the articles.
 In contrast, the NER-based map uses Stanza’s named entity recognition to dynamically extract all entities classified as GPE (Geo-Political Entity) or LOC (Location) from the January 2024 news corpus. This approach does not depend on a static list; instead, it leverages machine learning to recognize contextually relevant place names, even if they appear in varied grammatical forms or are previously unseen. Consequently, the NER approach results in a significantly higher number of recognized places, offering a much broader and more detailed map. However, this inclusivity introduces its own issues. Some non-places or incorrectly tagged entities (e.g., Twitter handles, abstract regions like “Middle East Eye,” or duplicated variants like “the Gaza Strip” and “Gaza”) might appear, especially if not cleaned properly. This leads to a noisier map with potential overlaps and inconsistencies.
 Another key visual difference lies in the distribution and density of points. The NER map shows denser clustering, particularly in conflict zones such as Gaza, Tel Aviv, and the West Bank. Marker sizes in this map, scaled by frequency of mentions, highlight which regions were most frequently discussed in January 2024. By contrast, the regex map, due to its more constrained matching, shows fewer locations and potentially overlooks emergent or less-expected geographic references. The NER map also visualizes more international mentions—places like Washington DC, Doha, and Tehran—which the regex method might have missed unless manually included in the gazetteer.
