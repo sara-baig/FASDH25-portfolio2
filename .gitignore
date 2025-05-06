@@ -1,4 +1,0 @@
-# do not allow these files to be added and committed:
-
-# a file created by Mac computers in every folder:
-.DS_Store 
