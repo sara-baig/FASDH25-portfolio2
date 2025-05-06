@@ -109,10 +109,10 @@ A gazetteers/ folder to store the generated NER_gazetteer.tsv and any related fi
 An articles/ folder containing the full dataset of news articles.
 A scripts/ folder to store all Python files in one place for clarity.
 
-####Documentation and AI Reflections
+#### Documentation and AI Reflections
 Each group member created a personal AI document, e.g., AI_documentation_SaraBaig.docx file, reflecting on how ChatGPT was used during the project. Instead of relying on ChatGPT to generate answers, we used it as a learning companion by asking it to explain concepts, help debug code, and walk us through best practices.
 
-####Final Preparation and Uploading to Moodle
+#### Final Preparation and Uploading to Moodle
 Once our GitHub repository was complete and reviewed, we created a local copy of it on one team member’s computer. Following the submission guidelines, we deleted the articles/ folder (which contained a large volume of raw text data) and the hidden .git/ directory (to reduce file size and remove versioning metadata).
 We then zipped the entire folder using standard compression tools and uploaded it to Moodle. Alongside the zip file, we also submitted the link to our public GitHub fork, allowing instructors to access the full project history, including commit messages and notebook versions.
 This two-step submission—GitHub link for transparency and zipped folder for portability—ensured that our project could be reviewed both as a final product and as a documented process.
@@ -120,7 +120,7 @@ The finalization stage helped us synthesize our work and understand how small de
 
 
 ## Comparison: Regex + Gazetteer vs NER
-###Regex + Gazetteer:
+### Regex + Gazetteer:
 Pros: One of the primary advantages of using regex with a gazetteer is its high precision when dealing with known place names. By using a curated list of Gaza-related locations (the gazetteer), we could match exact terms in the text using regex patterns. This method is particularly effective for domains where terminology is consistent and relatively constrained. Moreover, regex is computationally efficient, easily implemented, and transparent, making the results interpretable and easy to debug. When we needed to filter out irrelevant data or match specific formats (e.g., words in uppercase or within particular sentence structures), regex allowed fine-grained control.
 Cons: This method has clear limitations. It is entirely rule-based and thus lacks flexibility. If a place name is spelled differently, abbreviated, or mentioned in a context not anticipated by the regex rules, it will be missed. Moreover, the gazetteer needs to be comprehensive and updated—any omissions directly lead to false negatives. It also lacks the ability to handle context; for example, a word like “Rafah” might be a person’s name in one context and a location in another, but regex has no way of distinguishing between the two. In our project, we noticed this rigidity when uncommon or misspelled place names were missed entirely.
 
